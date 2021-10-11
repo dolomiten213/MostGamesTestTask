@@ -1,0 +1,95 @@
+﻿<Window x:Class="MostGames1.MainWindow" Name="window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MostGames1"
+        mc:Ignorable="d"
+        Title="The Most Games" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="0.1*"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="0.8*"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="10"></ColumnDefinition>
+            <ColumnDefinition Width="30"></ColumnDefinition>
+            <ColumnDefinition Width="10"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+            Grid.Row="1" Grid.Column="1">
+            <TextBlock x:Name="title" Text="Введите идентификаторы строк"
+                 Width="Auto"
+                 Margin="10px 5px 10px 0"
+                 Height="24"/>
+            <RichTextBox x:Name="Ids" 
+                 GotFocus="DropSelection"
+                 FontSize="16"
+                 MinWidth="400"
+                 Grid.Column="1" Grid.Row="1"     
+                 MaxWidth="300"
+                 Height="24">
+                <FlowDocument>
+                    <Paragraph>
+                        <Run Text="{Binding Path=StringID}"></Run>
+                    </Paragraph>
+                </FlowDocument>
+
+            </RichTextBox>
+            <Button 
+                x:Name="calc_button"
+                Content="Подсчитать"
+                Click="Calculate"
+                Margin="10px 0"
+                Height="24">
+            </Button>
+        </StackPanel>
+
+        <ListView x:Name="Labels" Margin="0 10 0 0"
+                  ItemsSource="{Binding Path=MainData}"
+                  Grid.Row="3" Grid.Column="1" 
+                  HorizontalAlignment="Stretch" BorderThickness="6"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Текст" Width="500px">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock FontSize="20" Text="{Binding Path=String}" TextWrapping="Wrap" Margin="20px"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Количество слов" Width="150px">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock FontSize="20" Text="{Binding Path=WordCount}"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Количество гласных" Width="150px">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock FontSize="20" Text="{Binding Path=VowelCount}"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+
+            </ListView.View>
+        </ListView>
+
+        <ProgressBar
+            x:Name="bar"
+            Maximum="{Binding Path=StringCount}"
+            Value="{Binding Path=Counter}"
+            Orientation="Vertical"
+            Grid.Column="3" Grid.Row="1" Grid.RowSpan="3">
+        </ProgressBar>
+    </Grid>
+</Window>
